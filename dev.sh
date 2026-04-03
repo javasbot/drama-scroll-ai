@@ -26,16 +26,22 @@ sleep 2
 
 # Start Node.js BFF
 echo "🟢 Starting Node.js BFF on port 3001..."
-(cd backend-node && npm run dev) &
+(cd backend-node && npm run dev) > /dev/null 2>&1 &
 NODE_PID=$!
 
 # Start Frontend
 echo "⚛️  Starting Frontend on port 5173..."
-(cd frontend && npm run dev) &
+(cd frontend && npm run dev) > /dev/null 2>&1 &
 FRONTEND_PID=$!
 
+# Start Java Backend
+echo "☕ Starting Java Backend on port 8080..."
+(cd backend-java && ./mvnw spring-boot:run) > /dev/null 2>&1 &
+JAVA_PID=$!
+
 # Give services time to start
-sleep 3
+echo "⏳ Waiting for services to initialize..."
+sleep 10
 
 echo ""
 echo "============================================"
@@ -43,6 +49,7 @@ echo "🎉 All services running!"
 echo ""
 echo "🌐 Frontend:     http://localhost:5173"
 echo "🟢 Node.js BFF:  http://localhost:3001"
+echo "☕ Java Backend: http://localhost:8080"
 echo "============================================"
 echo ""
 echo "Press Ctrl+C to stop all services"

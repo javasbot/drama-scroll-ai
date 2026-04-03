@@ -15,7 +15,6 @@ AI 驱动的无限下拉故事流平台。实时内容生成、情绪互动、�
 | **PostHog** | 数据分析 | ✅ 1M 事件/月 |
 | **Sentry** | 错误追踪 | ✅ 5K 错误/月 |
 | **Resend** | 邮件服务 | ✅ 3,000 封/月 |
-| **Stripe** | 订阅支付 | ✅ 免费集成 (2.9%) |
 | **Cloudflare** | CDN/DNS | ✅ 无限带宽 |
 | **GitHub** | 版本控制 | ✅ 无限仓库 |
 
@@ -33,10 +32,9 @@ AI 驱动的无限下拉故事流平台。实时内容生成、情绪互动、�
 │  │  ├─ Clerk Auth    │        │  ├─ Supabase (PostgreSQL)  │  │
 │  │  ├─ PostHog       │        │  ├─ Upstash (Redis)        │  │
 │  │  ├─ Sentry        │        │  ├─ Pinecone (向量)        │  │
-│  │  └─ Stripe.js     │        │  ├─ Groq (LLM)            │  │
+│  │  └─ Clerk Auth    │        │  ├─ Groq (LLM)            │  │
 │  └──────────────────┘          │  ├─ Clerk (认证)          │  │
-│                                  │  ├─ Stripe (支付)        │  │
-│  ┌──────────────────┐          │  ├─ Resend (邮件)         │  │
+│                                  │  ├─ Resend (邮件)         │  │
 │  │  Java Spring Boot │◀────▶│  ├─ Sentry (错误)          │  │
 │  │  (高并发 API)      │        │  └─ PostHog (分析)         │  │
 │  │  ├─ Supabase PG   │        └──────────────────────────┘  │
@@ -102,7 +100,6 @@ drama-scroll/
 │   │   │   ├── clerk.ts     # Clerk 认证
 │   │   │   ├── posthog.ts   # PostHog 分析
 │   │   │   ├── sentry.ts    # Sentry 错误追踪
-│   │   │   └── stripe.ts    # Stripe 支付
 │   │   ├── services/        # API 服务层
 │   │   ├── stores/          # Zustand 状态
 │   │   └── types/           # TypeScript 类型
@@ -114,7 +111,6 @@ drama-scroll/
 │   │   │   ├── supabase.js  # Supabase BaaS
 │   │   │   ├── upstash.js   # Upstash Redis
 │   │   │   ├── resend.js    # Resend 邮件
-│   │   │   ├── stripe.js    # Stripe 支付
 │   │   │   ├── sentry.js    # Sentry 错误追踪
 │   │   │   └── posthog.js   # PostHog 分析
 │   │   ├── middleware/
@@ -124,7 +120,6 @@ drama-scroll/
 │   │   │   ├── stories.js   # 故事 CRUD + LLM
 │   │   │   ├── sse.js       # SSE 实时推送
 │   │   │   ├── engagement.js# 互动 (点赞/踩/投票)
-│   │   │   ├── payments.js  # Stripe 支付
 │   │   │   ├── email.js     # Resend 邮件
 │   │   │   └── health.js
 │   │   └── services/        # 业务服务
@@ -152,7 +147,6 @@ drama-scroll/
 | `GROQ_API_KEY` | [console.groq.com](https://console.groq.com) |
 | `PINECONE_API_KEY` | [app.pinecone.io](https://app.pinecone.io) |
 | `CLERK_SECRET_KEY` / `VITE_CLERK_PUBLISHABLE_KEY` | [dashboard.clerk.com](https://dashboard.clerk.com) |
-| `STRIPE_SECRET_KEY` / `VITE_STRIPE_PUBLISHABLE_KEY` | [dashboard.stripe.com](https://dashboard.stripe.com) |
 | `RESEND_API_KEY` | [resend.com/api-keys](https://resend.com/api-keys) |
 | `SENTRY_DSN` / `VITE_SENTRY_DSN` | [sentry.io](https://sentry.io) |
 | `POSTHOG_API_KEY` / `VITE_POSTHOG_KEY` | [app.posthog.com](https://app.posthog.com) |
@@ -165,7 +159,6 @@ drama-scroll/
 4. **Upstash** — 创建 Redis 实例，复制连接信息
 5. **Clerk** — 创建应用，配置 Webhook
 6. **Cloudflare** — 添加域名，配置 DNS
-7. **Stripe** — 创建产品和价格，配置 Webhook
-8. **Sentry** — 创建项目，复制 DSN
-9. **PostHog** — 创建项目，复制 API Key
-10. **Resend** — 验证域名，创建 API Key
+7. **Sentry** — 创建项目，复制 DSN
+8. **PostHog** — 创建项目，复制 API Key
+9. **Resend** — 验证域名，创建 API Key

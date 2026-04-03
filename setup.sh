@@ -74,10 +74,8 @@ if command -v java &> /dev/null; then
   if [ -f "mvnw" ]; then
     chmod +x mvnw
     ./mvnw dependency:resolve -q 2>/dev/null || echo -e "${YELLOW}⚠️  Maven dependency resolution failed (non-critical)${NC}"
-  elif command -v mvn &> /dev/null; then
-    mvn dependency:resolve -q 2>/dev/null || echo -e "${YELLOW}⚠️  Maven dependency resolution failed (non-critical)${NC}"
   else
-    echo -e "${YELLOW}⚠️  Neither mvnw nor mvn found. Please install Maven.${NC}"
+    echo -e "${YELLOW}⚠️  mvnw not found. Please ensure Java backend is correctly setup.${NC}"
   fi
   echo -e "${GREEN}✅ Java Backend ready${NC}"
   cd ..
@@ -92,13 +90,9 @@ echo ""
 echo "============================================"
 echo -e "${GREEN}🎉 Setup complete!${NC}"
 echo ""
-echo "To start development:"
+echo -e "${YELLOW}To start development and access all services, run:${NC}"
 echo ""
-echo "  1. Frontend:     cd frontend && npm run dev"
-echo "  2. Node.js BFF:  cd backend-node && npm run dev"
-echo "  3. Java Backend: cd backend-java && ./mvnw spring-boot:run"
-echo ""
-echo "  Infrastructure:  docker-compose up -d  (Redis + PostgreSQL)"
+echo -e "${GREEN}  ./dev.sh${NC}"
 echo ""
 echo "🌐 Frontend:     http://localhost:5173"
 echo "🟢 Node.js BFF:  http://localhost:3001"
