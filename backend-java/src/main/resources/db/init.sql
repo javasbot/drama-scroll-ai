@@ -92,14 +92,11 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(255),
     username VARCHAR(128),
     avatar_url TEXT,
-    stripe_customer_id VARCHAR(128),
-    subscription_status VARCHAR(32) DEFAULT 'free',  -- free, pro, cancelled
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
-CREATE INDEX IF NOT EXISTS idx_users_stripe ON users(stripe_customer_id);
 
 -- Supabase RPC: 原子递增互动计数
 CREATE OR REPLACE FUNCTION increment_engagement(

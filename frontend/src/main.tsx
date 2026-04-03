@@ -29,6 +29,7 @@ function RootApp() {
       <ClerkProvider
         publishableKey={CLERK_PUBLISHABLE_KEY}
         appearance={clerkAppearance}
+        afterSignOutUrl="/"
       >
         <App />
       </ClerkProvider>

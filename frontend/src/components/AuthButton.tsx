@@ -16,7 +16,6 @@ function AuthButtonInner() {
     return (
       <div className="auth-button">
         <UserButton
-          afterSignOutUrl="/"
           appearance={{
             elements: {
               avatarBox: { width: '28px', height: '28px' },

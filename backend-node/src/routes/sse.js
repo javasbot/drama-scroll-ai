@@ -61,7 +61,7 @@ sseRouter.get('/feed', (req, res) => {
       upsertStoryVector(id, story).catch(() => {});
     } catch (error) {
       console.error('[SSE] Story generation error:', error.message);
-      res.write(`data: ${JSON.stringify({ type: 'error', message: 'Generation temporarily unavailable' })}\n\n`);
+      res.write(`data: ${JSON.stringify({ type: 'error', message: '内容生成服务暂时不可用，请稍后再试' })}\n\n`);
     } finally {
       isGenerating = false;
     }
@@ -114,3 +114,5 @@ sseRouter.get('/status', (_req, res) => {
     },
   });
 });
+
+export default sseRouter;

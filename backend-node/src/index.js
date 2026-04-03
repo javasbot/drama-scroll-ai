@@ -27,7 +27,6 @@ import healthRouter from './routes/health.js';
 import storiesRouter from './routes/stories.js';
 import sseRouter from './routes/sse.js';
 import engagementRouter from './routes/engagement.js';
-import paymentsRouter from './routes/payments.js';
 import emailRouter from './routes/email.js';
 
 const app = express();
@@ -52,7 +51,6 @@ app.use('/api/health', healthRouter);
 app.use('/api/stories', storiesRouter);
 app.use('/api/sse', sseRouter);
 app.use('/api/engagement', engagementRouter);
-app.use('/api/stripe', paymentsRouter);
 app.use('/api/email', emailRouter);
 
 // --- 错误处理 ---
@@ -74,7 +72,6 @@ const server = app.listen(PORT, () => {
     ['Groq', !!process.env.GROQ_API_KEY],
     ['Pinecone', !!process.env.PINECONE_API_KEY],
     ['Clerk', !!process.env.CLERK_SECRET_KEY],
-    ['Stripe', !!process.env.STRIPE_SECRET_KEY],
     ['Resend', !!process.env.RESEND_API_KEY],
     ['Sentry', !!process.env.SENTRY_DSN],
     ['PostHog', !!process.env.POSTHOG_API_KEY],

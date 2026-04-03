@@ -92,7 +92,7 @@ storyRouter.get('/:id', async (req, res, next) => {
     if (!story) {
       return res.status(404).json({
         success: false,
-        error: 'Story not found',
+        error: '未找到相关内容',
       });
     }
 
@@ -114,7 +114,7 @@ storyRouter.get('/:id/similar', async (req, res, next) => {
     if (!story) {
       return res.status(404).json({
         success: false,
-        error: 'Story not found',
+        error: '未找到相关内容',
       });
     }
 
@@ -185,3 +185,5 @@ storyRouter.post('/generate', async (req, res, next) => {
     next(error);
   }
 });
+
+export default storyRouter;

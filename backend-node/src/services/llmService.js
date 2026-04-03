@@ -5,41 +5,35 @@ const groq = new Groq({
 });
 
 const DRAMA_CATEGORIES = [
-  'workplace_betrayal',
-  'family_scandal',
-  'relationship_revenge',
-  'neighborhood_war',
-  'friend_backstab',
-  'wedding_disaster',
-  'inheritance_fight',
-  'roommate_nightmare',
-  'school_drama',
-  'online_dating_horror',
+  'workplace',
+  'family',
+  'relationship',
+  'friendship',
+  'community',
 ];
 
-const EMOTION_TAGS = ['😡 Rage', '😭 Heartbreak', '🤯 Shocking', '😈 Revenge', '🔥 Hot Take', '💀 Cringe', '👀 Tea', '🚩 Red Flag'];
+const EMOTION_TAGS = ['😡 愤怒', '😭 心碎', '🤯 震惊', '😈 爽文', '🔥 辣评', '💀 社死', '👀 吃瓜', '🚩 避雷'];
 
-const SYSTEM_PROMPT = `You are an expert dramatic storytelling AI. Generate a SHORT, intensely engaging dramatic story post for a social media feed. The story must:
+const SYSTEM_PROMPT = `你是一名资深的情景剧编剧 AI。请为社交媒体信息流生成一段**短小精悍且极具爆发力**的故事贴。
+要求：
+1. 字数控制在 80-150 字之间。
+2. 以第一人称（“我”）写作，模拟真实的社交媒体吐槽风格。
+3. 必须有一个极其抓人的开头（Hook），让人忍不住想看下去。
+4. 包含一个戏剧性的转折或悬念。
+5. 语言口语化，具有真实感，偶尔可以使用感叹号表示强调。
+6. 以一个能引起强烈情绪共鸣的问题或陈述结尾。
 
-1. Be 80-150 words maximum
-2. Written in first person as if posted on social media
-3. Have an extremely hooky opening line that makes people NEED to read more
-4. Include a dramatic twist or cliffhanger
-5. Feel authentic and relatable - like a real person venting
-6. Use casual, conversational language with occasional caps for emphasis
-7. End with a question or statement that provokes strong emotional reactions
-
-Output ONLY valid JSON with this exact structure:
+输出必须是合法的 JSON 格式，结构如下：
 {
-  "title": "catchy 5-8 word title",
-  "content": "the dramatic story text",
-  "category": "one of: workplace, family, relationship, friendship, community",
-  "emotionTag": "one emoji + emotion word like '😡 Rage' or '😭 Heartbreak'",
+  "title": "5-8个字的标题，要地道且抓眼",
+  "content": "故事正文",
+  "category": "必须是以下之一: workplace, family, relationship, friendship, community",
+  "emotionTag": "一个表情+情绪词，如 '😡 愤怒' 或 '😭 心碎'",
   "hookScore": 8.5,
   "triggerWarning": null
 }
 
-DO NOT include any text outside the JSON object.`;
+严禁输出 JSON 以外的任何文字。`;
 
 /**
  * Generate a single dramatic story via LLM
@@ -172,24 +166,24 @@ export async function generateBatch(count = 5) {
 function createFallbackStory(category, emotion) {
   const fallbacks = [
     {
-      title: "My Boss Just Sent This in the Group Chat",
-      content: "So my boss accidentally sent a voice note meant for his wife to our entire department group chat. It started with 'baby I can't stand these people anymore' and then proceeded to ROAST every single one of us by name. HR is involved now and he's been 'working from home' for 3 days. The best part? He gave me a 2/5 on my performance review last month for 'poor communication skills.' THE IRONY. Should I quit or wait for the severance package? 💀",
+      title: "老板竟然在工作群发了这段语音",
+      content: "天呐，我老板刚才手滑把发给老婆的语音发到了部门大群，开头第一句就是：'亲爱的，这帮蠢货我一秒钟都待不下去了'。接着他把我们组每个人挨个点了名吐了一遍槽，包括这周请病假的老李。现在人事部已经介入了，他已经'居家办公'三天没敢露面。最讽刺的是，上个月绩效面谈他刚给我的沟通能力打了2分。这回到底谁没沟通好？我是该现在辞职还是等遣散费？💀",
     },
     {
-      title: "Caught My Best Friend Living a Double Life",
-      content: "My best friend of 12 years has been telling everyone she's a marketing manager making 6 figures. I just found out she actually works at a call center. I only discovered this because I ran into her AT the call center while calling about my internet bill. She looked at me, I looked at her, and she just... hung up the call and walked out. She hasn't answered my texts in a week. I'm not even mad about the lie, I'm hurt she didn't trust me enough to tell the truth. What do I do?",
+      title: "发现我相处12年的闺蜜在过双重生活",
+      content: "我认识了12年的闺蜜一直跟所有人说她在做年薪百万的市场总监。结果我昨天去交网费。竟然在呼叫中心柜台撞见了正在工作的她。我俩对视那一秒，空气都凝固了。她直接挂掉电话扭头就走。这一周她都没回我信息。其实我根本不在意她赚多少钱，我难过的是，相处这么久她竟然一点都不信任我。这闺蜜还能做吗？",
     },
     {
-      title: "Wedding Day From Absolute Hell",
-      content: "My mother-in-law wore a WHITE DRESS to my wedding. When I confronted her, she said 'well technically it's cream.' My husband said NOTHING. Then during the toast, she announced that she's pregnant... at 52. She literally stole our thunder at OUR wedding. The photographer spent more time taking HER photos than ours. I found out later she called the DJ to play 'her song' during our first dance slot. I have never felt so disrespected in my LIFE. Am I overreacting?? 🚩",
+      title: "婚礼现场竟然成了婆婆的大型秀场",
+      content: "我婆婆竟然穿了一件白色的礼服来参加我的婚礼！我私下问她，她竟然理直气壮说这是'米白色'。我老公一句话都不敢坑。更炸裂的是，在敬酒环节，她突然宣布她怀孕了，52岁啊！我的婚礼头条瞬间变成了她老树开花。摄影师拍她的时间比拍我俩都多。我觉得整个婚礼都被毁了。我是不是该考虑及时止损？🚩",
     },
     {
-      title: "Roommate's Secret Almost Destroyed My Life",
-      content: "I just discovered my roommate has been using MY identity to sign up for credit cards for the past 8 months. I found out when I got denied for an apartment and my credit score was 340. THREE HUNDRED AND FORTY. She maxed out FOUR cards in my name totaling $23K. When I confronted her she said 'I was going to pay it back, you're overreacting.' I'm literally shaking. Filed a police report but she's already moved out and blocked me everywhere. My credit is DESTROYED at 25.",
+      title: "合租室友的秘密差点毁了我的一生",
+      content: "我刚刚发现我的室友过去8个月一直在盗用我的身份申请信用卡！如果不是我申请房贷被拒，我根本不知道我的信用分竟然掉到了340分。她一共开了四张卡刷了23万。我找她对质，她竟然说：'我本来打算还的，你反应也太激烈了吧'。她已经连夜搬走并把我拉黑了。25岁的我就背了这么多债。我该怎么办啊？😭",
     },
     {
-      title: "The Family Dinner That Ended Everything",
-      content: "At Thanksgiving dinner, my dad casually announced he has another family. Not HAD - HAS. As in, a whole other wife and TWO kids in the next state over. My mom dropped the gravy boat and it shattered. My sister started laughing hysterically. I just sat there. He said he 'needed to live his truth.' Sir, your truth has a mortgage and a minivan. The turkey went cold while we all just... stared. My mom hasn't said a word in three days. Happy holidays I guess? 😭",
+      title: "这顿年夜饭吃得我整个人都崩塌了",
+      content: "在全家人吃年夜饭的时候，我爸云淡风轻地宣布他在隔壁省还有一个家。不是曾经，是现在！家里还有一个老婆和两个已经读初中的孩子。我妈手里的汤勺直接砸在了地上，我姐开始疯狂大笑，而我坐在那像个傻子。他竟然说他'需要活出自我'。你的自我就是背着我们养了十几年小的？我妈已经三天没说话了。这种家真的还有救吗？💀",
     },
   ];
 
@@ -197,7 +191,7 @@ function createFallbackStory(category, emotion) {
   return {
     ...pick,
     category: category || 'community',
-    emotionTag: emotion || '🤯 Shocking',
+    emotionTag: emotion || '🤯 震惊',
     hookScore: 8.5,
     triggerWarning: null,
     generatedAt: new Date().toISOString(),

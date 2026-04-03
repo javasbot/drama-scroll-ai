@@ -26,7 +26,6 @@
     "p-queue": "^8.0.0",
     "posthog-node": "^5.28.11",
     "resend": "^6.10.0",
-    "stripe": "^22.0.0",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
