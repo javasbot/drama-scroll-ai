@@ -1,0 +1,43 @@
+
+services:
+  # --- Local PostgreSQL (simulates Supabase) ---
+  postgres:
+    image: postgres:16-alpine
+    container_name: drama-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: drama_user
+      POSTGRES_PASSWORD: drama_pass_2024
+      POSTGRES_DB: drama_scroll
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend-java/src/main/resources/db/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U drama_user -d drama_scroll"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # --- Local Redis (simulates Upstash) ---
+  redis:
+    image: redis:7-alpine
+    container_name: drama-redis
+    restart: unless-stopped
+    ports:
+      - "6380:6379"
+    command: redis-server --save 60 1 --loglevel warning --maxmemory 128mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
